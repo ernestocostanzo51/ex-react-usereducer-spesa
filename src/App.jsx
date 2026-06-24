@@ -22,7 +22,23 @@ const isAlreadyInCart = addedProducts.some(item => item.name === selectedProduct
       return 
     }
   setaddedProducts([...addedProducts , {...selectedProduct , quantity : 1}])
- 
+  
+}
+
+const updateProductQuantity = (nameToUpdate) => {
+  setaddedProducts((prevCart) => {
+    return prevCart.map((prod) => {
+      if (prod.name === nameToUpdate) {
+        return { ...prod, quantity: prod.quantity + 1 };
+      }
+      return prod;
+    });
+  });
+};
+
+const removeFromCart = (nameToRemove) => {
+ const productToRemove = addedProducts.filter((prod, name) => prod.name ==! nameToRemove)
+ setaddedProducts(productToRemove)
 }
 
   return (
@@ -44,6 +60,8 @@ const isAlreadyInCart = addedProducts.some(item => item.name === selectedProduct
           {addedProducts.map((item, index) => (
             <li key={index}>
               {item.name}  {item.price}€  x{item.quantity}
+              <button onClick={() => updateProductQuantity(item.name)}>+</button>
+              <button onClick={() => removeFromCart(item.name)}>Delete</button>
             </li>
           ))}
         </ul>
