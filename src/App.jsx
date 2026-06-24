@@ -10,8 +10,12 @@ const products = [
   { name: 'Pasta', price: 0.7 },
 ]
 
-const [addedProducts , setaddedProducts] = useState([])
 
+
+const [addedProducts , setaddedProducts] = useState([])
+const totalToPay = addedProducts.reduce((acc, item) => {
+  return acc + (item.quantity * item.price);
+}, 0); 
 const addToCart = (index) => {
   const selectedProduct = 
     products[index]
@@ -37,7 +41,7 @@ const updateProductQuantity = (nameToUpdate) => {
 };
 
 const removeFromCart = (nameToRemove) => {
- const productToRemove = addedProducts.filter((prod, name) => prod.name ==! nameToRemove)
+ const productToRemove = addedProducts.filter((prod, name) => prod.name !== nameToRemove)
  setaddedProducts(productToRemove)
 }
 
@@ -63,8 +67,10 @@ const removeFromCart = (nameToRemove) => {
               <button onClick={() => updateProductQuantity(item.name)}>+</button>
               <button onClick={() => removeFromCart(item.name)}>Delete</button>
             </li>
+
           ))}
         </ul>
+        <p>{totalToPay}</p>
      
     </>
   )
